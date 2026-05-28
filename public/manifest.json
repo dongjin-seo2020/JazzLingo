@@ -1,11 +1,11 @@
 {
-  "name": "VinoLingo — 와인을 배워요",
-  "short_name": "VinoLingo",
-  "description": "듀오링고 스타일로 배우는 기초 와인 지식",
+  "name": "JazzLingo — 재즈를 배워요",
+  "short_name": "JazzLingo",
+  "description": "듀오링고 스타일로 배우는 재즈 지식",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#FBF5EE",
-  "theme_color": "#8B1A4A",
+  "background_color": "#F5F0E8",
+  "theme_color": "#1A1A2E",
   "orientation": "portrait",
   "icons": [
     {

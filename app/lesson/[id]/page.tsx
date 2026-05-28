@@ -7,9 +7,9 @@ import WineMascot from '@/components/WineMascot';
 
 type Stage = 'intro' | 'cards' | 'quiz' | 'result';
 
-function ProgressBar({ current, total, color = '#8B1A4A' }: { current: number; total: number; color?: string }) {
+function ProgressBar({ current, total, color = '#E8A020' }: { current: number; total: number; color?: string }) {
   return (
-    <div className="h-3 bg-[#F0E0E8] rounded-full overflow-hidden flex-1">
+    <div className="h-3 bg-[#E8D8C0] rounded-full overflow-hidden flex-1">
       <div
         className="h-full rounded-full transition-all duration-500"
         style={{ width: `${(current / total) * 100}%`, background: `linear-gradient(90deg, ${color}, ${color}BB)` }}
@@ -33,7 +33,7 @@ function Header({
     <div className="flex items-center gap-3 px-4 pt-4 pb-2">
       <button
         onClick={onClose}
-        className="w-9 h-9 rounded-full flex items-center justify-center text-[#6B4050] hover:bg-[#F0E0E8] transition-colors text-xl"
+        className="w-9 h-9 rounded-full flex items-center justify-center text-[#6B5040] hover:bg-[#E8D8C0] transition-colors text-xl"
       >
         ✕
       </button>
@@ -68,7 +68,7 @@ export default function LessonPage({ params }: { params: Promise<{ id: string }>
   }, [progress.hearts]);
 
   if (!lesson) {
-    return <div className="flex items-center justify-center min-h-screen text-[#6B4050]">레슨을 찾을 수 없어요 😢</div>;
+    return <div className="flex items-center justify-center min-h-screen text-[#6B5040]">레슨을 찾을 수 없어요 😢</div>;
   }
 
   const totalSteps = lesson.cards.length + lesson.quiz.length;
@@ -105,7 +105,7 @@ export default function LessonPage({ params }: { params: Promise<{ id: string }>
 
   if (stage === 'intro') {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center px-6 bg-[#FBF5EE]">
+      <div className="min-h-screen flex flex-col items-center justify-center px-6 bg-[#F5F0E8]">
         <div className="animate-bounce-in mb-4">
           <WineMascot expression="excited" size={140} />
         </div>
@@ -115,20 +115,20 @@ export default function LessonPage({ params }: { params: Promise<{ id: string }>
         >
           {lesson.emoji}
         </div>
-        <h1 className="text-3xl font-black text-[#1A0A10] text-center mb-2">{lesson.title}</h1>
-        <p className="text-[#6B4050] text-center mb-2">{lesson.description}</p>
-        <p className="text-sm text-[#8B1A4A] font-bold mb-10">
+        <h1 className="text-3xl font-black text-[#1A1224] text-center mb-2">{lesson.title}</h1>
+        <p className="text-[#6B5040] text-center mb-2">{lesson.description}</p>
+        <p className="text-sm text-[#E8A020] font-bold mb-10">
           📖 {lesson.cards.length}개 카드 · 🧠 {lesson.quiz.length}문제 · ⭐ {lesson.xp} XP
         </p>
         <button
           onClick={() => setStage('cards')}
-          className="w-full max-w-xs bg-gradient-to-r from-[#8B1A4A] to-[#C44B7A] text-white font-black text-lg py-4 rounded-2xl shadow-lg active:scale-95 transition-transform"
+          className="w-full max-w-xs bg-gradient-to-r from-[#1A1A2E] to-[#2A2A4E] text-white font-black text-lg py-4 rounded-2xl shadow-lg active:scale-95 transition-transform"
         >
-          시작하기! 🍷
+          시작하기! 🎷
         </button>
         <button
           onClick={() => router.push('/')}
-          className="mt-4 text-[#6B4050] text-sm font-medium underline"
+          className="mt-4 text-[#6B5040] text-sm font-medium underline"
         >
           나중에 할게요
         </button>
@@ -139,19 +139,19 @@ export default function LessonPage({ params }: { params: Promise<{ id: string }>
   if (stage === 'cards') {
     const card = lesson.cards[cardIndex];
     return (
-      <div className="min-h-screen flex flex-col bg-[#FBF5EE]">
+      <div className="min-h-screen flex flex-col bg-[#F5F0E8]">
         <Header onClose={() => router.push('/')} current={cardIndex} total={totalSteps} hearts={hearts} />
         <div className="flex-1 flex flex-col items-center justify-center px-4 py-6">
-          <div className="text-xs font-bold text-[#8B1A4A] bg-[#F0E0E8] px-3 py-1 rounded-full mb-6">
+          <div className="text-xs font-bold text-[#E8A020] bg-[#FFF8E0] px-3 py-1 rounded-full mb-6">
             카드 {cardIndex + 1} / {lesson.cards.length}
           </div>
           <div
             key={cardIndex}
-            className="w-full max-w-sm bg-white rounded-3xl p-8 shadow-xl border border-[#F0E0E8] animate-bounce-in"
+            className="w-full max-w-sm bg-white rounded-3xl p-8 shadow-xl border border-[#E8D8C0] animate-bounce-in"
           >
             <div className="text-6xl text-center mb-4">{card.emoji}</div>
-            <h2 className="text-xl font-black text-[#1A0A10] text-center mb-4">{card.title}</h2>
-            <p className="text-[#4A2030] text-center leading-relaxed">{card.content}</p>
+            <h2 className="text-xl font-black text-[#1A1224] text-center mb-4">{card.title}</h2>
+            <p className="text-[#4A3020] text-center leading-relaxed">{card.content}</p>
           </div>
         </div>
         <div className="px-4 pb-8">
@@ -163,7 +163,7 @@ export default function LessonPage({ params }: { params: Promise<{ id: string }>
                 setStage('quiz');
               }
             }}
-            className="w-full bg-gradient-to-r from-[#8B1A4A] to-[#C44B7A] text-white font-black text-lg py-4 rounded-2xl shadow-lg active:scale-95 transition-transform"
+            className="w-full bg-gradient-to-r from-[#1A1A2E] to-[#2A2A4E] text-white font-black text-lg py-4 rounded-2xl shadow-lg active:scale-95 transition-transform"
           >
             {cardIndex < lesson.cards.length - 1 ? '다음 →' : '퀴즈 시작! 🧠'}
           </button>
@@ -175,13 +175,13 @@ export default function LessonPage({ params }: { params: Promise<{ id: string }>
   if (stage === 'quiz') {
     const q = lesson.quiz[quizIndex];
     return (
-      <div className={`min-h-screen flex flex-col bg-[#FBF5EE] ${isWrong ? 'animate-shake' : ''}`}>
+      <div className={`min-h-screen flex flex-col bg-[#F5F0E8] ${isWrong ? 'animate-shake' : ''}`}>
         <Header onClose={() => router.push('/')} current={currentStep} total={totalSteps} hearts={hearts} />
         <div className="flex-1 flex flex-col px-4 py-4">
-          <div className="text-xs font-bold text-[#8B1A4A] bg-[#F0E0E8] px-3 py-1 rounded-full mb-5 self-start">
+          <div className="text-xs font-bold text-[#E8A020] bg-[#FFF8E0] px-3 py-1 rounded-full mb-5 self-start">
             문제 {quizIndex + 1} / {lesson.quiz.length}
           </div>
-          <p className="text-xl font-black text-[#1A0A10] leading-tight mb-6">{q.question}</p>
+          <p className="text-xl font-black text-[#1A1224] leading-tight mb-6">{q.question}</p>
           <div className="flex flex-col gap-3">
             {q.choices.map((choice, i) => {
               let style =
@@ -189,15 +189,15 @@ export default function LessonPage({ params }: { params: Promise<{ id: string }>
               if (!answered) {
                 style +=
                   selected === i
-                    ? ' border-[#8B1A4A] bg-[#F8E8F0] text-[#8B1A4A]'
-                    : ' border-[#E8D0DC] bg-white text-[#1A0A10] hover:border-[#C44B7A]';
+                    ? ' border-[#E8A020] bg-[#FFF8E0] text-[#8B6000]'
+                    : ' border-[#E8D8C0] bg-white text-[#1A1224] hover:border-[#E8A020]';
               } else {
                 if (i === q.correct) {
                   style += ' border-[#58CC02] bg-[#E8F9DC] text-[#2B7A06]';
                 } else if (selected === i) {
                   style += ' border-[#FF4B4B] bg-[#FFE8E8] text-[#CC0000]';
                 } else {
-                  style += ' border-[#E8D0DC] bg-white text-[#6B4050] opacity-50';
+                  style += ' border-[#E8D8C0] bg-white text-[#6B5040] opacity-50';
                 }
               }
               return (
@@ -214,7 +214,6 @@ export default function LessonPage({ params }: { params: Promise<{ id: string }>
           </div>
         </div>
 
-        {/* Feedback banner */}
         {showFeedback && (
           <div
             className={`px-4 py-4 rounded-t-3xl animate-pop-up ${
@@ -231,7 +230,7 @@ export default function LessonPage({ params }: { params: Promise<{ id: string }>
                 >
                   {selected === q.correct ? '정답이에요!' : '틀렸어요!'}
                 </div>
-                <div className="text-sm text-[#4A2030] mt-0.5">{q.explanation}</div>
+                <div className="text-sm text-[#4A3020] mt-0.5">{q.explanation}</div>
               </div>
             </div>
             <button
@@ -247,7 +246,6 @@ export default function LessonPage({ params }: { params: Promise<{ id: string }>
           </div>
         )}
 
-        {/* Check button */}
         {!showFeedback && (
           <div className="px-4 pb-8">
             <button
@@ -255,7 +253,7 @@ export default function LessonPage({ params }: { params: Promise<{ id: string }>
               disabled={selected === null}
               className={`w-full font-black text-lg py-4 rounded-2xl transition-all ${
                 selected !== null
-                  ? 'bg-gradient-to-r from-[#8B1A4A] to-[#C44B7A] text-white shadow-lg active:scale-95'
+                  ? 'bg-gradient-to-r from-[#E8A020] to-[#F5C84A] text-white shadow-lg active:scale-95'
                   : 'bg-gray-200 text-gray-400 cursor-not-allowed'
               }`}
             >
@@ -270,34 +268,34 @@ export default function LessonPage({ params }: { params: Promise<{ id: string }>
   // Result
   const isPerfect = correctCount === lesson.quiz.length;
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center px-6 bg-[#FBF5EE]">
+    <div className="min-h-screen flex flex-col items-center justify-center px-6 bg-[#F5F0E8]">
       <div className="animate-bounce-in">
         <WineMascot expression={isPerfect ? 'celebrating' : correctCount >= 3 ? 'happy' : 'thinking'} size={140} />
       </div>
-      <h1 className="text-3xl font-black text-[#1A0A10] mt-4 mb-2">
+      <h1 className="text-3xl font-black text-[#1A1224] mt-4 mb-2">
         {isPerfect ? '완벽해요! 🎉' : correctCount >= 3 ? '잘 했어요! 👍' : '다음엔 더 잘 할 수 있어요!'}
       </h1>
-      <p className="text-[#6B4050] mb-6">
+      <p className="text-[#6B5040] mb-6">
         {lesson.quiz.length}문제 중 {correctCount}문제 정답
       </p>
       <div className="flex gap-4 mb-8">
-        <div className="bg-white rounded-2xl px-6 py-4 text-center shadow-sm border border-[#F0E0E8]">
-          <div className="text-3xl font-black text-[#D4A017]">+{xpEarned}</div>
-          <div className="text-xs text-[#6B4050] font-bold">XP 획득</div>
+        <div className="bg-white rounded-2xl px-6 py-4 text-center shadow-sm border border-[#E8D8C0]">
+          <div className="text-3xl font-black text-[#E8A020]">+{xpEarned}</div>
+          <div className="text-xs text-[#6B5040] font-bold">XP 획득</div>
         </div>
-        <div className="bg-white rounded-2xl px-6 py-4 text-center shadow-sm border border-[#F0E0E8]">
-          <div className="text-3xl font-black text-[#8B1A4A]">{Math.round((correctCount / lesson.quiz.length) * 100)}%</div>
-          <div className="text-xs text-[#6B4050] font-bold">정답률</div>
+        <div className="bg-white rounded-2xl px-6 py-4 text-center shadow-sm border border-[#E8D8C0]">
+          <div className="text-3xl font-black text-[#E8A020]">{Math.round((correctCount / lesson.quiz.length) * 100)}%</div>
+          <div className="text-xs text-[#6B5040] font-bold">정답률</div>
         </div>
       </div>
       {isPerfect && (
-        <div className="bg-gradient-to-r from-[#D4A017] to-[#F0C060] text-white font-black text-sm px-5 py-2.5 rounded-full mb-6 shadow-md">
+        <div className="bg-gradient-to-r from-[#E8A020] to-[#F5C84A] text-white font-black text-sm px-5 py-2.5 rounded-full mb-6 shadow-md">
           🏆 퍼펙트 클리어!
         </div>
       )}
       <button
         onClick={() => router.push('/')}
-        className="w-full max-w-xs bg-gradient-to-r from-[#8B1A4A] to-[#C44B7A] text-white font-black text-lg py-4 rounded-2xl shadow-lg active:scale-95 transition-transform"
+        className="w-full max-w-xs bg-gradient-to-r from-[#1A1A2E] to-[#2A2A4E] text-white font-black text-lg py-4 rounded-2xl shadow-lg active:scale-95 transition-transform"
       >
         홈으로 돌아가기 🏠
       </button>
@@ -312,7 +310,7 @@ export default function LessonPage({ params }: { params: Promise<{ id: string }>
             setCorrectCount(0);
             setShowFeedback(false);
           }}
-          className="mt-4 text-[#8B1A4A] font-bold text-sm underline"
+          className="mt-4 text-[#E8A020] font-bold text-sm underline"
         >
           다시 도전하기 🔄
         </button>

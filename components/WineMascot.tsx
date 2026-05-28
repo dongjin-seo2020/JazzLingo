@@ -9,111 +9,114 @@ interface Props {
 }
 
 export default function WineMascot({ expression = 'happy', size = 120, className = '' }: Props) {
+  const s = size;
+  const h = Math.round(s * 1.1);
   return (
     <svg
-      width={size}
-      height={Math.round(size * 1.5)}
-      viewBox="0 0 120 180"
+      width={s}
+      height={h}
+      viewBox="0 0 120 132"
       className={className}
       xmlns="http://www.w3.org/2000/svg"
     >
-      {/* Glass bowl outline */}
-      <path
-        d="M18,6 L102,6 Q90,62 80,84 L40,84 Q30,62 18,6 Z"
-        fill="rgba(196,75,122,0.07)"
-        stroke="rgba(196,75,122,0.25)"
-        strokeWidth="2"
-      />
-      {/* Rim highlight */}
-      <line x1="18" y1="6" x2="102" y2="6" stroke="rgba(196,75,122,0.4)" strokeWidth="3" strokeLinecap="round" />
+      {/* Trumpet bell */}
+      <ellipse cx="96" cy="68" rx="22" ry="16" fill="#E8A020" />
+      <ellipse cx="96" cy="68" rx="18" ry="12" fill="#F5C840" opacity="0.5" />
 
-      {/* Wine fill */}
-      <path
-        d="M32,36 L88,36 Q82,80 78,84 L42,84 Q38,80 32,36 Z"
-        fill="#8B1A4A"
-      />
-      {/* Wine surface */}
-      <path d="M32,36 Q60,26 88,36" fill="#A8224E" />
-      {/* Wine highlight */}
-      <ellipse cx="57" cy="34" rx="16" ry="5" fill="#C44B7A" opacity="0.35" />
+      {/* Trumpet main tube */}
+      <rect x="18" y="60" width="85" height="16" rx="8" fill="#C8860A" />
+      <rect x="18" y="62" width="85" height="6" rx="3" fill="#E8A020" opacity="0.4" />
 
-      {/* Eyes white */}
-      <circle cx="46" cy="53" r="9.5" fill="white" />
-      <circle cx="74" cy="53" r="9.5" fill="white" />
+      {/* Valve pistons */}
+      <rect x="38" y="50" width="11" height="24" rx="5" fill="#A06010" />
+      <rect x="53" y="50" width="11" height="24" rx="5" fill="#A06010" />
+      <rect x="68" y="50" width="11" height="24" rx="5" fill="#A06010" />
+      <rect x="39" y="51" width="4" height="6" rx="2" fill="#E8A020" opacity="0.6" />
+      <rect x="54" y="51" width="4" height="6" rx="2" fill="#E8A020" opacity="0.6" />
+      <rect x="69" y="51" width="4" height="6" rx="2" fill="#E8A020" opacity="0.6" />
 
-      {expression === 'sad' ? (
+      {/* Mouthpiece */}
+      <ellipse cx="14" cy="68" rx="6" ry="5" fill="#A06010" />
+      <ellipse cx="14" cy="68" rx="3" ry="2.5" fill="#C8860A" />
+
+      {/* Face on the bell */}
+      {/* Eyes */}
+      {expression === 'thinking' ? (
         <>
-          <circle cx="47" cy="55" r="5.5" fill="#1A0A0A" />
-          <circle cx="75" cy="55" r="5.5" fill="#1A0A0A" />
-          <circle cx="49" cy="53" r="1.8" fill="white" />
-          <circle cx="77" cy="53" r="1.8" fill="white" />
-          {/* Tears */}
-          <ellipse cx="44" cy="64" rx="2" ry="3.5" fill="#7EC8E3" opacity="0.8" />
-          <ellipse cx="72" cy="64" rx="2" ry="3.5" fill="#7EC8E3" opacity="0.8" />
+          <path d="M87,63 Q90,60 93,63" stroke="#1A1A2E" strokeWidth="2" fill="none" strokeLinecap="round" />
+          <path d="M97,63 Q100,60 103,63" stroke="#1A1A2E" strokeWidth="2" fill="none" strokeLinecap="round" />
+          <circle cx="90" cy="65" r="3.5" fill="#1A1A2E" />
+          <circle cx="100" cy="65" r="3.5" fill="#1A1A2E" />
+          <circle cx="91" cy="63.5" r="1" fill="white" />
+          <circle cx="101" cy="63.5" r="1" fill="white" />
         </>
-      ) : expression === 'thinking' ? (
+      ) : expression === 'sad' ? (
         <>
-          <path d="M37,51 Q46,45 55,51" stroke="#1A0A0A" strokeWidth="2.5" fill="none" strokeLinecap="round" />
-          <path d="M65,51 Q74,45 83,51" stroke="#1A0A0A" strokeWidth="2.5" fill="none" strokeLinecap="round" />
-          <circle cx="46" cy="54" r="5" fill="#1A0A0A" />
-          <circle cx="74" cy="54" r="5" fill="#1A0A0A" />
-          <circle cx="48" cy="52" r="1.5" fill="white" />
-          <circle cx="76" cy="52" r="1.5" fill="white" />
+          <circle cx="90" cy="65" r="4" fill="white" />
+          <circle cx="100" cy="65" r="4" fill="white" />
+          <circle cx="90" cy="66" r="2.5" fill="#1A1A2E" />
+          <circle cx="100" cy="66" r="2.5" fill="#1A1A2E" />
+          <circle cx="91" cy="64.5" r="0.8" fill="white" />
+          <circle cx="101" cy="64.5" r="0.8" fill="white" />
+          <ellipse cx="88" cy="72" rx="1.5" ry="2.5" fill="#7EC8E3" opacity="0.8" />
+          <ellipse cx="98" cy="72" rx="1.5" ry="2.5" fill="#7EC8E3" opacity="0.8" />
         </>
       ) : (
         <>
-          <circle cx="47" cy="54" r="5.5" fill="#1A0A0A" />
-          <circle cx="75" cy="54" r="5.5" fill="#1A0A0A" />
-          <circle cx="49" cy="52" r="1.8" fill="white" />
-          <circle cx="77" cy="52" r="1.8" fill="white" />
+          <circle cx="90" cy="64" r="4" fill="white" />
+          <circle cx="100" cy="64" r="4" fill="white" />
+          <circle cx="90" cy="65" r="2.5" fill="#1A1A2E" />
+          <circle cx="100" cy="65" r="2.5" fill="#1A1A2E" />
+          <circle cx="91" cy="63.5" r="0.8" fill="white" />
+          <circle cx="101" cy="63.5" r="0.8" fill="white" />
           {expression === 'excited' && (
             <>
-              <circle cx="44" cy="47" r="2" fill="#FFD700" opacity="0.9" />
-              <circle cx="78" cy="45" r="1.5" fill="#FFD700" opacity="0.9" />
+              <circle cx="87" cy="59" r="1.5" fill="#FFD700" opacity="0.9" />
+              <circle cx="103" cy="57" r="1.2" fill="#FFD700" opacity="0.9" />
             </>
           )}
         </>
       )}
 
-      {/* Blush */}
-      <ellipse cx="33" cy="64" rx="7" ry="4.5" fill="#FFB0B0" opacity="0.45" />
-      <ellipse cx="87" cy="64" rx="7" ry="4.5" fill="#FFB0B0" opacity="0.45" />
+      {/* Cheeks */}
+      <ellipse cx="85" cy="69" rx="4" ry="3" fill="#FFB0B0" opacity="0.45" />
+      <ellipse cx="107" cy="69" rx="4" ry="3" fill="#FFB0B0" opacity="0.45" />
 
       {/* Mouth */}
       {expression === 'happy' && (
-        <path d="M47,68 Q60,79 73,68" stroke="#1A0A0A" strokeWidth="2.5" fill="none" strokeLinecap="round" />
+        <path d="M88,73 Q95,79 103,73" stroke="#1A1A2E" strokeWidth="2" fill="none" strokeLinecap="round" />
       )}
       {expression === 'excited' && (
-        <ellipse cx="60" cy="71" rx="10" ry="7" fill="#1A0A0A" />
+        <ellipse cx="95" cy="74" rx="6" ry="5" fill="#1A1A2E" />
       )}
       {expression === 'celebrating' && (
         <>
-          <path d="M46,67 Q60,80 74,67" stroke="#1A0A0A" strokeWidth="2.5" fill="none" strokeLinecap="round" />
-          <text x="90" y="22" fontSize="16">✨</text>
-          <text x="5" y="28" fontSize="14">⭐</text>
-          <text x="95" y="50" fontSize="12">🎉</text>
+          <path d="M87,72 Q95,79 103,72" stroke="#1A1A2E" strokeWidth="2" fill="none" strokeLinecap="round" />
+          <text x="100" y="20" fontSize="14">✨</text>
+          <text x="5" y="25" fontSize="12">⭐</text>
+          <text x="105" y="45" fontSize="10">🎉</text>
         </>
       )}
       {expression === 'thinking' && (
         <>
-          <path d="M48,69 Q60,75 72,69" stroke="#1A0A0A" strokeWidth="2.5" fill="none" strokeLinecap="round" />
-          <circle cx="88" cy="18" r="7" fill="white" stroke="#C44B7A" strokeWidth="1.5" />
-          <text x="84.5" y="23" fontSize="9">?</text>
-          <circle cx="80" cy="30" r="3" fill="white" stroke="#C44B7A" strokeWidth="1.5" />
+          <path d="M88,73 Q95,77 102,73" stroke="#1A1A2E" strokeWidth="2" fill="none" strokeLinecap="round" />
+          <circle cx="110" cy="22" r="6" fill="white" stroke="#E8A020" strokeWidth="1.5" />
+          <text x="106.5" y="27" fontSize="8">?</text>
+          <circle cx="104" cy="32" r="2.5" fill="white" stroke="#E8A020" strokeWidth="1.5" />
         </>
       )}
       {expression === 'sad' && (
-        <path d="M47,74 Q60,66 73,74" stroke="#1A0A0A" strokeWidth="2.5" fill="none" strokeLinecap="round" />
+        <path d="M88,78 Q95,73 103,78" stroke="#1A1A2E" strokeWidth="2" fill="none" strokeLinecap="round" />
       )}
 
-      {/* Stem */}
-      <rect x="57" y="84" width="6" height="54" fill="#7A1640" rx="3" />
+      {/* Musical notes floating */}
+      <text x="6" y="42" fontSize="16" fill="#E8A020" opacity="0.8">♪</text>
+      <text x="100" y="108" fontSize="12" fill="#C8860A" opacity="0.7">♫</text>
 
-      {/* Base shadow */}
-      <ellipse cx="60" cy="141" rx="33" ry="10" fill="#6B0E32" />
-      {/* Base */}
-      <ellipse cx="60" cy="138" rx="33" ry="10" fill="#8B1A4A" />
-      <ellipse cx="60" cy="136" rx="28" ry="6" fill="#9E2255" />
+      {/* Stand/base */}
+      <rect x="50" y="88" width="6" height="30" rx="3" fill="#C8860A" />
+      <ellipse cx="53" cy="120" rx="28" ry="8" fill="#A06010" />
+      <ellipse cx="53" cy="118" rx="24" ry="6" fill="#C8860A" />
     </svg>
   );
 }

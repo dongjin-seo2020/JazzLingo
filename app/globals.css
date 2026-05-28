@@ -1,18 +1,18 @@
 @import "tailwindcss";
 
 @theme inline {
-  --color-wine: #8B1A4A;
-  --color-wine-light: #C44B7A;
-  --color-wine-dark: #5D0E2F;
-  --color-champagne: #D4A017;
-  --color-cream: #FBF5EE;
+  --color-jazz: #1A1A2E;
+  --color-jazz-card: #252542;
+  --color-gold: #E8A020;
+  --color-gold-light: #F5C84A;
+  --color-parchment: #F5F0E8;
   --color-correct: #58CC02;
   --color-wrong: #FF4B4B;
 }
 
 :root {
-  --background: #FBF5EE;
-  --foreground: #1A0A10;
+  --background: #F5F0E8;
+  --foreground: #1A1224;
   color-scheme: light;
 }
 
@@ -64,10 +64,10 @@ body {
 .no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
-@keyframes globe-meridian {
-  from { transform: translateX(0); }
-  to { transform: translateX(30px); }
+@keyframes note-float {
+  0%, 100% { transform: translateY(0) rotate(-10deg); opacity: 0.7; }
+  50% { transform: translateY(-12px) rotate(10deg); opacity: 1; }
 }
-.globe-meridian { animation: globe-meridian 8s linear infinite; }
+.animate-note-float { animation: note-float 2s ease-in-out infinite; }
 
 .pb-safe { padding-bottom: max(5rem, calc(env(safe-area-inset-bottom) + 4rem)); }
