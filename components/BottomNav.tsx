@@ -4,17 +4,15 @@ import { usePathname } from 'next/navigation';
 
 const items = [
   { href: '/', label: '홈', icon: '🏠' },
+  { href: '/standards', label: '리얼북', icon: '📖' },
+  { href: '/theory', label: '화성학', icon: '🎼' },
   { href: '/explore', label: '탐험', icon: '🎷' },
-  { href: '/guess', label: 'Guess', icon: '🎯' },
-  { href: '/playlist', label: '플레이리스트', icon: '🎵' },
   { href: '/profile', label: '프로필', icon: '📊' },
 ];
 
 export default function BottomNav() {
   const pathname = usePathname();
-  const isGamePage = pathname.startsWith('/guess');
-
-  if (isGamePage) return null;
+  if (pathname.startsWith('/guess')) return null;
 
   return (
     <nav className="fixed bottom-0 left-0 right-0 z-50 bg-white border-t border-[#E8D8C0]" style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}>
