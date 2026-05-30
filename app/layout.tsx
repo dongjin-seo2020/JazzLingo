@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import BottomNav from '@/components/BottomNav';
+import { LanguageProvider } from '@/providers/LanguageProvider';
 
 export const metadata: Metadata = {
   title: 'JazzLingo — Dongjin의 재즈 듀오링고',
@@ -27,10 +28,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <link rel="apple-touch-icon" href="/icon-192.png" />
       </head>
       <body className="min-h-full bg-[#F5F0E8] text-[#1A1224]">
-        <div className="max-w-lg mx-auto min-h-screen relative">
-          {children}
-        </div>
-        <BottomNav />
+        <LanguageProvider>
+          <div className="max-w-lg mx-auto min-h-screen relative">
+            {children}
+          </div>
+          <BottomNav />
+        </LanguageProvider>
       </body>
     </html>
   );

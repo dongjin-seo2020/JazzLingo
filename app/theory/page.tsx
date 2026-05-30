@@ -2,6 +2,9 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { theory, CATEGORY_INFO, type TheoryCategory } from '@/data/theory';
+import { useLanguage } from '@/providers/LanguageProvider';
+import { t } from '@/data/i18n';
+import LangToggle from '@/components/LangToggle';
 
 const CATEGORIES: { value: TheoryCategory | null; label: string; emoji: string }[] = [
   { value: null, label: '전체', emoji: '📚' },
@@ -18,9 +21,12 @@ const DIFF_INFO: Record<number, { label: string; color: string; bg: string }> = 
   4: { label: '고급', color: '#8B1A6B', bg: '#F5E8F5' },
 };
 
-function TopicCard({ topic, onClick }: { topic: typeof theory[0]; onClick: () => void }) {
+function TopicCard({ topic, onClick, lang }: { topic: typeof theory[0]; onClick: () => void; lang: 'ko' | 'en' }) {
   const diff = DIFF_INFO[topic.difficulty];
   const cat = CATEGORY_INFO[topic.category];
+  const diffLabel = t(lang, `diff_${topic.difficulty}` as 'diff_1');
+  const catLabel = t(lang, `cat_${topic.category}` as 'cat_scale');
+  const title = lang === 'en' && topic.titleEn ? topic.titleEn : topic.title;
   return (
     <button
       onClick={onClick}
@@ -35,12 +41,12 @@ function TopicCard({ topic, onClick }: { topic: typeof theory[0]; onClick: () =>
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-start justify-between gap-2">
-            <div className="font-black text-sm text-[#1A1224] leading-tight flex-1">{topic.title}</div>
+            <div className="font-black text-sm text-[#1A1224] leading-tight flex-1">{title}</div>
             <span
               className="flex-shrink-0 text-[10px] font-black px-2 py-0.5 rounded-full"
               style={{ color: diff.color, background: diff.bg }}
             >
-              {diff.label}
+              {diffLabel}
             </span>
           </div>
           <p className="text-xs text-[#6B5040] mt-1 leading-relaxed line-clamp-2">{topic.description}</p>
@@ -49,7 +55,7 @@ function TopicCard({ topic, onClick }: { topic: typeof theory[0]; onClick: () =>
               className="text-xs font-bold px-2 py-0.5 rounded-full"
               style={{ color: cat.color, background: cat.bg }}
             >
-              {cat.emoji} {cat.label}
+              {cat.emoji} {catLabel}
             </span>
           </div>
         </div>
@@ -58,9 +64,12 @@ function TopicCard({ topic, onClick }: { topic: typeof theory[0]; onClick: () =>
   );
 }
 
-function TopicModal({ topic, onClose }: { topic: typeof theory[0]; onClose: () => void }) {
+function TopicModal({ topic, onClose, lang }: { topic: typeof theory[0]; onClose: () => void; lang: 'ko' | 'en' }) {
   const diff = DIFF_INFO[topic.difficulty];
   const cat = CATEGORY_INFO[topic.category];
+  const diffLabel = t(lang, `diff_${topic.difficulty}` as 'diff_1');
+  const catLabel = t(lang, `cat_${topic.category}` as 'cat_scale');
+  const title = lang === 'en' && topic.titleEn ? topic.titleEn : topic.title;
 
   const paragraphs = topic.content.split('\n').filter((l) => l.trim().length > 0);
 
@@ -79,16 +88,16 @@ function TopicModal({ topic, onClose }: { topic: typeof theory[0]; onClose: () =
                 className="text-xs font-black px-2 py-0.5 rounded-full"
                 style={{ color: diff.color, background: diff.bg }}
               >
-                {diff.label}
+                {diffLabel}
               </span>
               <span
                 className="text-xs font-black px-2 py-0.5 rounded-full"
                 style={{ color: cat.color, background: cat.bg }}
               >
-                {cat.label}
+                {catLabel}
               </span>
             </div>
-            <h2 className="text-white font-black text-lg leading-tight">{topic.title}</h2>
+            <h2 className="text-white font-black text-lg leading-tight">{title}</h2>
           </div>
           <button onClick={onClose} className="text-white/60 text-2xl mt-1 flex-shrink-0">✕</button>
         </div>
@@ -97,7 +106,7 @@ function TopicModal({ topic, onClose }: { topic: typeof theory[0]; onClose: () =
           {/* Formula */}
           {topic.formula && (
             <div className="bg-[#1A1A2E] rounded-2xl px-4 py-3 mb-4">
-              <div className="text-xs font-black text-[#E8A020] mb-1">공식</div>
+              <div className="text-xs font-black text-[#E8A020] mb-1">{t(lang, 'theory_formula')}</div>
               <div className="text-white font-mono text-sm">{topic.formula}</div>
             </div>
           )}
@@ -105,7 +114,7 @@ function TopicModal({ topic, onClose }: { topic: typeof theory[0]; onClose: () =
           {/* Example */}
           {topic.example && (
             <div className="bg-[#FFF8E0] border border-[#E8A020] rounded-2xl px-4 py-3 mb-4">
-              <div className="text-xs font-black text-[#E8A020] mb-1">예시</div>
+              <div className="text-xs font-black text-[#E8A020] mb-1">{t(lang, 'theory_example')}</div>
               <div className="text-[#1A1224] font-mono font-bold text-sm">{topic.example}</div>
             </div>
           )}
@@ -131,7 +140,7 @@ function TopicModal({ topic, onClose }: { topic: typeof theory[0]; onClose: () =
           {/* Tips */}
           {topic.tips && topic.tips.length > 0 && (
             <div className="bg-white rounded-2xl p-4 border border-[#E8D8C0] mb-4">
-              <h3 className="font-black text-sm text-[#1A1224] mb-2">💡 실전 팁</h3>
+              <h3 className="font-black text-sm text-[#1A1224] mb-2">{t(lang, 'theory_tips')}</h3>
               <ul className="flex flex-col gap-2">
                 {topic.tips.map((tip, i) => (
                   <li key={i} className="flex gap-2 text-sm text-[#1A1224]">
@@ -146,7 +155,7 @@ function TopicModal({ topic, onClose }: { topic: typeof theory[0]; onClose: () =
           {/* Related Standards */}
           {topic.relatedStandards && topic.relatedStandards.length > 0 && (
             <div className="bg-white rounded-2xl p-4 border border-[#E8D8C0] mb-4">
-              <h3 className="font-black text-sm text-[#1A1224] mb-2">🎵 관련 스탠다드</h3>
+              <h3 className="font-black text-sm text-[#1A1224] mb-2">{t(lang, 'theory_related_standards')}</h3>
               <div className="flex flex-wrap gap-2">
                 {topic.relatedStandards.map((sid) => (
                   <Link
@@ -165,7 +174,7 @@ function TopicModal({ topic, onClose }: { topic: typeof theory[0]; onClose: () =
           {/* Related Topics */}
           {topic.relatedTopics && topic.relatedTopics.length > 0 && (
             <div className="mb-4">
-              <h3 className="font-black text-xs text-[#9B8070] mb-2">관련 개념</h3>
+              <h3 className="font-black text-xs text-[#9B8070] mb-2">{t(lang, 'theory_related_topics')}</h3>
               <div className="flex flex-wrap gap-2">
                 {topic.relatedTopics.map((tid) => (
                   <span key={tid} className="text-xs font-bold text-[#6B5040] bg-[#E8D8C0] px-3 py-1 rounded-full">
@@ -184,49 +193,56 @@ function TopicModal({ topic, onClose }: { topic: typeof theory[0]; onClose: () =
 }
 
 export default function TheoryPage() {
+  const { lang } = useLanguage();
   const [category, setCategory] = useState<TheoryCategory | null>(null);
   const [selected, setSelected] = useState<typeof theory[0] | null>(null);
 
   const filtered = theory.filter((t) => !category || t.category === category);
 
   return (
-    <main className="pb-24 pt-4 px-4 bg-[#F5F0E8] min-h-screen">
-      <div className="mb-4">
-        <h1 className="text-2xl font-black text-[#1A1A2E]">🎼 화성학 기초</h1>
-        <p className="text-xs text-[#6B5040]">스케일, 화음, 진행, 테크닉</p>
+    <main className="pb-safe pt-4 px-4 bg-[#F5F0E8] min-h-screen">
+      <div className="flex items-start justify-between mb-4">
+        <div>
+          <h1 className="text-2xl font-black text-[#1A1A2E]">🎼 {t(lang, 'theory_title')}</h1>
+          <p className="text-xs text-[#6B5040]">{t(lang, 'theory_subtitle')}</p>
+        </div>
+        <LangToggle />
       </div>
 
       {/* Category tabs */}
       <div className="flex gap-2 overflow-x-auto no-scrollbar pb-2 mb-4">
-        {CATEGORIES.map(({ value, label, emoji }) => (
-          <button
-            key={label}
-            onClick={() => setCategory(value)}
-            className={`flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-black border transition-all ${
-              category === value
-                ? 'bg-[#1A1A2E] text-white border-[#1A1A2E]'
-                : 'bg-white text-[#6B5040] border-[#E8D8C0]'
-            }`}
-          >
-            <span>{emoji}</span>
-            <span>{label}</span>
-          </button>
-        ))}
+        {CATEGORIES.map(({ value, emoji }) => {
+          const label = value === null ? t(lang, 'filter_all') : t(lang, `cat_${value}` as 'cat_scale');
+          return (
+            <button
+              key={String(value)}
+              onClick={() => setCategory(value)}
+              className={`flex-shrink-0 flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-black border transition-all ${
+                category === value
+                  ? 'bg-[#1A1A2E] text-white border-[#1A1A2E]'
+                  : 'bg-white text-[#6B5040] border-[#E8D8C0]'
+              }`}
+            >
+              <span>{emoji}</span>
+              <span>{label}</span>
+            </button>
+          );
+        })}
       </div>
 
       {/* Topic count */}
-      <p className="text-xs text-[#9B8070] mb-3 font-bold">{filtered.length}개 주제</p>
+      <p className="text-xs text-[#9B8070] mb-3 font-bold">{t(lang, 'theory_topic_count', filtered.length)}</p>
 
       {/* Topic grid */}
       <div className="flex flex-col gap-3">
         {filtered.map((topic) => (
-          <TopicCard key={topic.id} topic={topic} onClick={() => setSelected(topic)} />
+          <TopicCard key={topic.id} topic={topic} onClick={() => setSelected(topic)} lang={lang} />
         ))}
       </div>
 
       {/* Topic detail modal */}
       {selected && (
-        <TopicModal topic={selected} onClose={() => setSelected(null)} />
+        <TopicModal topic={selected} onClose={() => setSelected(null)} lang={lang} />
       )}
     </main>
   );

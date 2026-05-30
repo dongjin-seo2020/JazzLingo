@@ -1,13 +1,16 @@
 'use client';
-import { useParams } from 'next/navigation';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { artists } from '@/data/artists';
 import { standards } from '@/data/standards';
+import { useLanguage } from '@/providers/LanguageProvider';
+import { t } from '@/data/i18n';
+import LangToggle from '@/components/LangToggle';
 
 export default function ArtistPage() {
   const params = useParams();
   const router = useRouter();
+  const { lang } = useLanguage();
   const id = typeof params.id === 'string' ? params.id : params.id?.[0];
   const artist = artists.find((a) => a.id === id);
 
@@ -16,9 +19,9 @@ export default function ArtistPage() {
       <main className="min-h-screen bg-[#F5F0E8] flex items-center justify-center">
         <div className="text-center">
           <div className="text-5xl mb-4">🎷</div>
-          <p className="font-black text-[#1A1224]">아티스트를 찾을 수 없어요</p>
+          <p className="font-black text-[#1A1224]">{t(lang, 'artist_not_found')}</p>
           <button onClick={() => router.back()} className="mt-4 text-[#E8A020] font-bold text-sm">
-            뒤로 가기
+            {t(lang, 'back')}
           </button>
         </div>
       </main>
@@ -28,15 +31,18 @@ export default function ArtistPage() {
   const relatedStandards = standards.filter((s) => artist.associatedStandards.includes(s.id));
 
   return (
-    <main className="pb-24 bg-[#F5F0E8] min-h-screen">
+    <main className="pb-safe bg-[#F5F0E8] min-h-screen">
       {/* Header */}
       <div
         className="px-4 pt-12 pb-6"
         style={{ background: `linear-gradient(135deg, ${artist.color}, ${artist.color}BB)` }}
       >
-        <button onClick={() => router.back()} className="text-white/70 text-sm mb-4 flex items-center gap-1">
-          ← 뒤로
-        </button>
+        <div className="flex items-center justify-between mb-4">
+          <button onClick={() => router.back()} className="text-white/70 text-sm flex items-center gap-1">
+            {t(lang, 'back')}
+          </button>
+          <LangToggle />
+        </div>
         <div className="flex items-center gap-4">
           <div
             className="w-20 h-20 rounded-2xl flex items-center justify-center text-4xl bg-white/20 border-2 border-white/30 flex-shrink-0"
@@ -67,7 +73,7 @@ export default function ArtistPage() {
       <div className="px-4 pt-4">
         {/* Bio */}
         <div className="bg-white rounded-2xl p-4 shadow-sm border border-[#E8D8C0] mb-4">
-          <h2 className="font-black text-base text-[#1A1224] mb-2">📝 소개</h2>
+          <h2 className="font-black text-base text-[#1A1224] mb-2">{t(lang, 'artist_bio')}</h2>
           <p className="text-sm text-[#1A1224] leading-relaxed">{artist.bio}</p>
         </div>
 
@@ -84,7 +90,7 @@ export default function ArtistPage() {
 
         {/* Key Albums */}
         <div className="bg-white rounded-2xl p-4 shadow-sm border border-[#E8D8C0] mb-4">
-          <h2 className="font-black text-base text-[#1A1224] mb-3">💿 주요 앨범</h2>
+          <h2 className="font-black text-base text-[#1A1224] mb-3">{t(lang, 'artist_albums')}</h2>
           <div className="flex flex-col gap-3">
             {artist.keyAlbums.map((album, i) => (
               <div key={i} className="flex gap-3 items-start">
@@ -103,14 +109,14 @@ export default function ArtistPage() {
 
         {/* Influence */}
         <div className="bg-white rounded-2xl p-4 shadow-sm border border-[#E8D8C0] mb-4">
-          <h2 className="font-black text-base text-[#1A1224] mb-2">🌟 영향과 유산</h2>
+          <h2 className="font-black text-base text-[#1A1224] mb-2">{t(lang, 'artist_influence')}</h2>
           <p className="text-sm text-[#1A1224] leading-relaxed">{artist.influence}</p>
         </div>
 
         {/* Related Standards */}
         {relatedStandards.length > 0 && (
           <div className="bg-white rounded-2xl p-4 shadow-sm border border-[#E8D8C0] mb-4">
-            <h2 className="font-black text-base text-[#1A1224] mb-3">🎵 관련 스탠다드</h2>
+            <h2 className="font-black text-base text-[#1A1224] mb-3">{t(lang, 'artist_standards')}</h2>
             <div className="flex flex-col gap-2">
               {relatedStandards.map((standard) => (
                 <Link key={standard.id} href={`/standards/${standard.id}`}>

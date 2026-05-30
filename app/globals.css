@@ -70,4 +70,5 @@ body {
 }
 .animate-note-float { animation: note-float 2s ease-in-out infinite; }
 
-.pb-safe { padding-bottom: max(5rem, calc(env(safe-area-inset-bottom) + 4rem)); }
+/* nav=4rem(64px) + 1rem buffer + safe area */
+.pb-safe { padding-bottom: max(5.5rem, calc(env(safe-area-inset-bottom) + 5rem)); }
